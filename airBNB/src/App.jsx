@@ -1,60 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import Card from './components/Card'
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCards } from './slices/cardsSlice';
+import axios from 'axios';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import Card from './components/Card';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Layout from './Layout';
+import Card from './Card';
 
 export default function App() {
+  const dispatch = useDispatch();
+  const cards = useSelector((state) => state.cards);
 
-
+  useEffect(() => {
+    // Fetch data from your server and update the Redux state
+    axios.get('https://613c7e69e9d92a0017e1736f.mockapi.io/cards').then((response) => {
+      dispatch(setCards(response.data));
+    });
+  }, [dispatch]);
+  
   return (
-    <>
-      <div>
-        < Navbar />
-        < Hero />
-        < Card
-          img="../public/katie.jpg"
-          image="../public/star11.png"
-          number1="5.0"
-          number2="(6) ."
-          town="USA"
-          title="Life lessons with Katie Zaferes"
-          cost="From $136 / person"
-        />
-      
-        < Card
-          img="../public/biking.jpg"
-          image="../public/star11.png"
-          number1="4.8"
-          number2="(2) ."
-          town="USA"
-          title="Group Mountain Bikin"
-          cost="From $50 / person"
-        />
-        < Card
-          img="../public/sky.jpg"
-          image="../public/star11.png"
-          number1="4.5"
-          number2="(10) ."
-          town="USA"
-          title="Skydiving with friends"
-          cost="From $200 / person"
-        />
-          < Card
-          img="../public/wed.jpg"
-          image="../public/star11.png"
-          number1="5.0"
-          number2="(30) ."
-          town="USA"
-          title="Learn wedding photography"
-          cost="From $125 / person"
-        />
-
-      </div>
-    </>
-  )
+    <Router>
+      <Switch>
+        <Route path="/" exact>
+          <Layout>
+            {cards.map((card) => (
+              <Card key={card.id} {...card} />
+            ))}
+          </Layout>
+        </Route>
+        <Route path="/details/:id" component={DetailsPage} />
+      </Switch>
+    </Router>
+  );
 }
+
 
 

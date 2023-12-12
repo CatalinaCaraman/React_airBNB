@@ -33,7 +33,7 @@ section{
 }
 /* Card.css */
 .card {
-  display: inline-block; /* Modificat la inline-block pentru a dispune cardurile pe un singur rând */
+  display: inline-block; 
   margin: 2px;
   width: 300px;
   font-size: 12px;
@@ -44,15 +44,15 @@ section{
 
 .card--photo {
   width: 100%;
-  height: 350px; /* Ajustați în funcție de dimensiunea dorită */
-  object-fit: cover; /* Asigură că imaginea acoperă întreaga zonă a elementului */
+  height: 350px; 
+  object-fit: cover; 
   border-radius: 10px 10px 0 0;
 }
 
 
 .card--stats {
   padding: 10px;
-  flex-direction: column; /* Modificat pentru a dispune elementele sub forma de coloană */
+  flex-direction: column; 
   align-items: center;
 }
 
